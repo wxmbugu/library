@@ -4,24 +4,6 @@
     <form @submit.prevent="Register">
       <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
         <div>
-          <label class="block mb-2 text-indigo-500">FirstName</label>
-          <input
-            v-model="Firstname"
-            class="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-            type="text"
-            name="firstname"
-          />
-        </div>
-        <div>
-          <label class="block mb-2 text-indigo-500">LastName</label>
-          <input
-            v-model="Lastname"
-            class="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
-            type="text"
-            name="lastname"
-          />
-        </div>
-        <div>
           <label class="block mb-2 text-indigo-500">UserName</label>
           <input
             v-model="Username"
@@ -45,7 +27,16 @@
             v-model="Password"
             class="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
             type="text"
-            name="username"
+            name="password"
+          />
+        </div>
+        <div>
+          <label class="block mb-2 text-indigo-500">Confirm Password</label>
+          <input
+            v-model="CPassword"
+            class="w-full p-2 mb-6 text-indigo-700 border-b-2 border-indigo-500 outline-none focus:bg-gray-300"
+            type="text"
+            name="confirm_password"
           />
         </div>
       </div>

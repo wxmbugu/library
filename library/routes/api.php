@@ -33,6 +33,7 @@ Route::group([
     Route::post('refresh', [AuthController::class, 'refresh']);
 });
 
+Route::get('/books', [BooksController::class, 'index']);
 
 Route::middleware('jwt.verify')->group(function () {
     Route::middleware('admin.verify')->group(function () {
@@ -45,13 +46,13 @@ Route::middleware('jwt.verify')->group(function () {
     Route::get('/users/{id}', [UserController::class, 'show']);
     //books
     Route::post('/books', [BooksController::class, 'store']);
-    Route::get('/books', [BooksController::class, 'index']);
     Route::delete('/books/{id}', [BooksController::class, 'destroy']);
     Route::put('/books/{id}', [BooksController::class, 'update']);
     Route::get('/books/{id}', [BooksController::class, 'show']);
 
     //loans
-    Route::post('/loans', [BookLoansController::class, 'store']);
+    Route::post('/request/{bookid}', [BookLoansController::class, 'store']);
+    Route::get('/requests', [BookLoansController::class, 'index_by_user']);
     Route::get('/loans', [BookLoansController::class, 'index']);
     Route::delete('/loans/{id}', [BookLoansController::class, 'destroy']);
     Route::put('/loans/{id}', [BookLoansController::class, 'update']);

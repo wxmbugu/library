@@ -17,14 +17,15 @@ export default createStore({
     }
   },
   actions: {
-    login({commit},credentials){
-      return axios
-              .post('//127.0.0.1:8000/api/auth/login/',credentials)
-              .then(({data})=>{
-                commit('SET_USER_DATA',data)
-                console.log(data)
-              })
-    },
+   async login({ commit }, credentials) {
+      try {
+        const response = await axios.post('//127.0.0.1:8000/api/auth/login/', credentials);
+        commit('SET_USER_DATA', response.data);
+        return response.data; 
+      } catch (error) {
+        throw error; 
+      }
+    }, 
     logout({commit}){
       commit('CLEAR_USER_DATA')
     }

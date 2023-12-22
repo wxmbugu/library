@@ -81,4 +81,12 @@ class BookLoans extends Model
     // Functions ...
 
     // Relations ...
+    public function book()
+    {
+        return $this->belongsTo(Books::class, 'book_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

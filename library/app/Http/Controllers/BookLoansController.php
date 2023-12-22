@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Validator;
 
 use App\Models\BookLoans;
 
 use Carbon\Carbon;
-
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class BookLoansController extends Controller
 {
@@ -24,28 +25,46 @@ class BookLoansController extends Controller
         ], 404);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $bookid)
     {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
-            'book_id' => 'required',
-            'due_date' => 'required',
-            'return_date' => 'required',
-            'status' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json([
-                "error" => $validator->errors()
-            ], 400);
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (JWTException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+        // Check if the user has already borrowed the same book and it's not returned
+        $existingLoan = BookLoans::where('user_id', $user->id)
+            ->where('book_id', $bookid)
+            ->whereIn('status', ['requested', 'borrowed'])
+            ->first();
+
+        if ($existingLoan) {
+            if ($existingLoan->status === 'requested') {
+                return response()->json([
+                    'error' => 'You have already requested this book. Please wait for approval.'
+                ], 400);
+            } elseif ($existingLoan->status === 'borrowed') {
+                return response()->json([
+                    'error' => 'You have already borrowed this book. Return the book before requesting it again.'
+                ], 400);
+            }
         }
         $loan = new BookLoans;
-        $due_date = date("Y-m-d H:i:s", substr($request->due_date, 0, 10));
-        $return_date = date("Y-m-d H:i:s", substr($request->return_date, 0, 10));
-        $loan->user_id = $request->user_id;
-        $loan->book_id = $request->book_id;
+        $loan_date = Carbon::now();
+        //due_date will be after three weeks
+        //return_date will be after two weeks
+        //when due_date passes it becomes a penalty if not returned or overdue in this case
+        $due_date = Carbon::parse($loan_date)->addWeeks(3);
+        //the appropriate date to return the book
+        $return_date = Carbon::parse($loan_date)->addWeeks(2);
+        $loan->loan_date = $loan_date;
+        $loan->user_id = $user->id;
+        $loan->book_id = $bookid;
         $loan->due_date = $due_date;
         $loan->return_date = $return_date;
-        $loan->status = $request->status;
+        $loan->status = "requested";
+        $loan->timestamps = Carbon::now();
         $loan->save();
         return response()->json([
             "message" => "book loan added successfully"
@@ -77,7 +96,21 @@ class BookLoansController extends Controller
     }
     public function index()
     {
-        $loans = BookLoans::all();
+
+        $loans = BookLoans::with('book', 'user')->get()->all();
+        return response()->json([
+            "message" => $loans
+        ], 200);
+    }
+    public function index_by_user()
+    {
+
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+        } catch (JWTException $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        $loans = BookLoans::with('book', 'user')->get()->where('user_id', $user->id)->all();
         return response()->json([
             "message" => $loans
         ], 200);

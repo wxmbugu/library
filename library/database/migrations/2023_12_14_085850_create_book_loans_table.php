@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('loan_date')->useCurrent();
             $table->timestamp('due_date')->useCurrent();
             $table->timestamp('return_date')->useCurrent();
-            $table->boolean('extended')->default(0)->change();;
+            $table->boolean('extended')->default(0);
             $table->timestamp('extension_date')->useCurrent();
             $table->integer('penalty_amount')->length(11)->default(0);
             $table->string('penalty_status', 15)->nullable();

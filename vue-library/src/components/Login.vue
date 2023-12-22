@@ -1,6 +1,6 @@
 /* eslint-disable vue/valid-template-root */
 <template>
-  <div class="max-w-xs w-full m-auto bg-indigo-100 rounded p-5">
+  <div class="max-w-xs w-full m-auto bg-indigo-100 rounded my-20 p-5">
     <header>
       <img
         class="w-20 mx-auto mb-5"
@@ -60,18 +60,29 @@ export default {
     }
   },
   methods: {
-    login() {
-      this.$store
-        .dispatch('login', {
+    async login() {
+      try {
+        const response = await this.$store.dispatch('login', {
           email: this.Username,
           password: this.Password,
         })
-        .then(() => {
-          this.$router.push({ name: 'Home' })
-        })
-        .catch((err) => {
+
+        if (response && response.user && response.user.id !== undefined) {
+          if (response.user.id === 1) {
+            this.$router.push({ name: 'Requests' })
+          } else {
+            this.$router.push({ name: 'Home' })
+          }
+        } else {
+          console.error('Unexpected response structure:', response)
+        }
+      } catch (err) {
+        if (err.response && err.response.data) {
           this.error = err.response.data.error
-        })
+        } else {
+          console.error('An unexpected error occurred:', err)
+        }
+      }
     },
   },
 }

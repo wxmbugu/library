@@ -29,16 +29,24 @@
               >
             </a>
             <!--Menu -->
-            <div class="hidden md:flex items-center space-x-1">
+            <div
+              v-if="this.$store.state.user"
+              class="hidden md:flex items-center space-x-1"
+            >
               <p class="py-5 px-2 text-white hover:text-indigo-200">
-                Categories
+                <router-link
+                  :to="{ name: 'Requests' }"
+                  class="py-5 px-2 text-white hover:text-indigo-200"
+                  >Requests</router-link
+                >
               </p>
-              <router-link
-                v-if="this.$store.state.user"
-                :to="{ name: 'Instructor' }"
-                class="py-5 px-2 text-white hover:text-indigo-200"
-                >Borrowed Books</router-link
-              >
+              <p class="py-5 px-2 text-white hover:text-indigo-200">
+                <router-link
+                  :to="{ name: 'Borrowed' }"
+                  class="py-5 px-2 text-white hover:text-indigo-200"
+                  >Borrowed</router-link
+                >
+              </p>
             </div>
           </div>
           <!-- Login -->
@@ -86,16 +94,6 @@
     <!-- mobile menu -->
     <div class="md:hidden bg-gray-900" :class="{ hidden: showmobilemenu }">
       <a class="block py-2 px-4 text-white hover:text-indigo-200">Categories</a>
-      <router-link
-        :to="{ name: 'Instructor' }"
-        class="block py-2 px-4 text-white hover:text-indigo-200"
-        >Insturctor</router-link
-      >
-      <router-link
-        :to="{ name: 'MyLearning' }"
-        class="block py-2 px-4 text-white hover:text-indigo-200"
-        >My Learning</router-link
-      >
     </div>
 
     <!--    <router-link class="text-4xl float-left" to="/">Udemy</router-link>
