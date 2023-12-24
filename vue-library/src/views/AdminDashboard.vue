@@ -107,7 +107,7 @@ export default {
     async fetchData() {
       try {
         const usersResponse = await axios.get('users')
-        const booksResponse = await axios.get('loans')
+        const booksResponse = await axios.get('books')
         getAllBookLoanRequest().then((response) => {
           const loansArray = Object.values(response.message)
           if (Array.isArray(loansArray)) {
