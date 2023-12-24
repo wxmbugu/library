@@ -4,7 +4,7 @@ import axios  from "axios";
 
 window.axios = axios
 axios.defaults.withCredentials = false
-axios.defaults.baseURL = '//localhost:8000/api/'
+axios.defaults.baseURL = 'https://library-laravel.fly.dev/api/'
 
 const createBooks = async (name, description,publisher,isbn,pages,category,sub_category,file) => {
     let data = await axios.post('books', { 

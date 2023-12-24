@@ -49,7 +49,7 @@ export default {
       try {
         this.isRefreshing = true
         const refresh_response = await axios.post(
-          '//127.0.0.1:8000/api/auth/refresh/',
+          'https://library-laravel.fly.dev/api/auth/refresh/',
         )
         this.$store.commit('SET_USER_DATA', refresh_response.data)
       } catch (error) {

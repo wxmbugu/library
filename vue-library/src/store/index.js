@@ -6,7 +6,7 @@ const TOKEN_REFRESH_INTERVAL = 1;
 
 const startTokenRefresh = async (commit) => {
   try {
-    const refresh_response = await axios.post('//127.0.0.1:8000/api/auth/refresh/');
+    const refresh_response = await axios.post('https://library-laravel.fly.dev/api/auth/refresh/');
     commit('SET_USER_DATA', refresh_response.data);
   } catch (error) {
     console.error('Error refreshing token:', error);
@@ -32,7 +32,7 @@ export default createStore({
   actions: {
     async login({ commit }, credentials) {
       try {
-        const response = await axios.post('//127.0.0.1:8000/api/auth/login/', credentials);
+        const response = await axios.post('https://library-laravel.fly.dev/api/auth/login/', credentials);
         commit('SET_USER_DATA', response.data);
         return response.data;
       } catch (error) {
