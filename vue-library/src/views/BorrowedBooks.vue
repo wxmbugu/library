@@ -1,10 +1,10 @@
 <template>
   <ErrorToast :error="error" @close-error="closeError" />
   <SuccessToast :success="success" @close-success="closeSuccess" />
-  <BookBorrowTable :loans="approvedLoans" />
+  <BookBorrowTable :loans="approvedLoans" @extend-borrow="ExtendBorrow" />
 </template>
 <script>
-import { getAllBookLoanRequestbyUser } from '../client'
+import { getAllBookLoanRequestbyUser, updateBookExtensionLoan } from '../client'
 import ErrorToast from '@/components/ErrorToast.vue'
 import SuccessToast from '@/components/SuccessToast.vue'
 import BookBorrowTable from '@/components/BorrowedTable.vue'
@@ -43,6 +43,16 @@ export default {
         })
         .catch((err) => {
           console.log(err)
+        })
+    },
+    ExtendBorrow(id) {
+      updateBookExtensionLoan(id, 'requested')
+        .then((response) => {
+          this.success = response.message
+          this.getallbookrequest()
+        })
+        .catch((err) => {
+          this.error = err.response.data.error
         })
     },
     closeError() {

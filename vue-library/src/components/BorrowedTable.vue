@@ -50,7 +50,7 @@
               <a
                 href="#"
                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                @click.prevent="extend()"
+                @click.prevent="extend(loan.id)"
                 >Extend</a
               >
             </td>
@@ -70,8 +70,8 @@ export default {
     },
   },
   methods: {
-    extend() {
-      this.$emit('extend-borrow')
+    extend(id) {
+      this.$emit('extend-borrow', id)
     },
     formatDate(timestamp) {
       const date = new Date(timestamp * 1000) // Convert seconds to milliseconds
