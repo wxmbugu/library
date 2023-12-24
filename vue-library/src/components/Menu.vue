@@ -66,7 +66,6 @@ export default {
   components: { Menu, MenuButton, MenuItems, MenuItem },
   methods: {
     logout() {
-      // this.$router.push({ name: 'Login' })
       this.$store.dispatch('logout')
     },
   },
