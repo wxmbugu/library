@@ -40,12 +40,6 @@
       <a class="text-indigo-700 hover:text-pink-700 text-sm float-left" href="#"
         >Forgot Password?</a
       >
-      <router-link
-        :to="{ name: 'Register' }"
-        class="text-indigo-700 hover:text-pink-700 text-sm float-right"
-        href="#"
-        >Create Account</router-link
-      >
     </footer>
   </div>
 </template>
