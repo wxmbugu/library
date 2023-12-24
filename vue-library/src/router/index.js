@@ -20,42 +20,53 @@ const routes = [
   {
     path: '/requests',
     name: 'Requests',
-    component: Status
+    component: Status,
+    meta: { requiresAuth: true },
   },
   {
     path: '/borrowed',
     name: 'Borrowed',
-    component: Borrowed
+    component: Borrowed,
+    meta: { requiresAuth: true },
+
   },
  {
     path: '/book',
     name: 'CreateBook',
-    component: CreateBook
+    component: CreateBook,
+    meta: { requiresAuth: true },
+
   },
  {
     path: '/user',
     name: 'RegisterUser',
-    component: RegisterUser
+    component: RegisterUser,
+    meta: { requiresAuth: true },
   },
  {
     path: '/extension',
     name: 'ExtensionBookLoan',
-    component: ExtensionBookLoan
+    component: ExtensionBookLoan,
+     meta: { requiresAuth: true },
+
   },
  {
     path: '/dashboard',
     name: 'Dashboard',
-    component: Dashboard
+    component: Dashboard,
+    meta: { requiresAuth: true },
   },
  {
     path: '/status',
     name: 'UpdateBookLoan',
-    component: UpdateBookLoan
+    component: UpdateBookLoan,
+    meta: { requiresAuth: true },
   },
   {
     path: '/books/:id',
     name: 'Book',
-    component: Book
+    component: Book, 
+    meta: { requiresAuth: true },
   },
   {
     path: '/login',

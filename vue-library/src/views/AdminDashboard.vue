@@ -31,6 +31,13 @@
       Register New User
     </router-link>
   </button>
+  <button
+    type="submit"
+    class="bg-gray-800 text-white px-4 py-2 mr-10 rounded float-right"
+  >
+    <router-link :to="{ name: 'CreateBook' }"> Register New Book </router-link>
+  </button>
+
   <div class="my-40">
     <h1
       class="text-center text-3xl mb-4 uppercase bg-white text-gray-700 mx-auto px-2"
