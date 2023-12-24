@@ -157,11 +157,6 @@
       <a class="block py-2 px-4 text-white hover:text-indigo-200">Categories</a>
     </div>
 
-    <!--    <router-link class="text-4xl float-left" to="/">Udemy</router-link>
-        <router-link class="text-center my-2  px-4 hidden md:flex text-black  float-left" to="/">Courses</router-link>
-        <router-link class="text-center hidden md:flex  border border-black-500 rounded py-2 px-4 bg-black text-white ml-2  float-right" to="/">Log In</router-link>
-        <router-link class="text-center hidden md:flex  border border-black rounded py-2 px-4 text-black  float-right" to="/">Sign Up</router-link>
-        -->
     <div class="md:hidden flex"></div>
   </nav>
 </template>
