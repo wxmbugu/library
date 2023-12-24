@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     approvedLoans() {
-      return this.loans.filter((loan) => loan.status === 'approved')
+      return this.loans.filter((loan) => loan.status === 'borrowed')
     },
   },
   methods: {

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Books;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class BooksController extends Controller
 {
@@ -29,9 +31,9 @@ class BooksController extends Controller
             'description' => 'required',
             'publisher' => 'required',
             'isbn' => 'required',
-            'pages' => 'required',
+            'pages' => 'required|numeric',
             'category' => 'required',
-            'image' => 'required',
+            'file' => 'required|max:20480|mimes:jpeg,jpg,png,webp',
             'sub_category' => 'required',
         ]);
         if ($validator->fails()) {
@@ -39,6 +41,10 @@ class BooksController extends Controller
                 "error" => $validator->errors()
             ], 400);
         }
+        $file = $request->file('file');
+
+        $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+        Storage::disk('public')->putFileAs('uploads', $file, $fileName);
         $book = new Books;
         $book->name = $request->name;
         $book->description = $request->description;
@@ -47,7 +53,7 @@ class BooksController extends Controller
         $book->pages = $request->pages;
         $book->category = $request->category;
         $book->sub_category = $request->sub_category;
-        $book->image = $request->image;
+        $book->image =  config('app.url') . '/api/media/' . $fileName;
         $book->save();
         return response()->json([
             "message" => "book added successfully"

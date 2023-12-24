@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\BookLoansController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileServeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,17 +36,21 @@ Route::group([
 
 Route::get('/books', [BooksController::class, 'index']);
 
+
+Route::get('/media/{file}', [FileServeController::class, 'serve']);
+
 Route::middleware('jwt.verify')->group(function () {
     Route::middleware('admin.verify')->group(function () {
+        Route::get('/loans', [BookLoansController::class, 'index']);
+        Route::post('/users', [UserController::class, 'store']);
+        Route::get('/users', [UserController::class, 'index']);
+        Route::post('/books', [BooksController::class, 'store']);
     });
     // Users
-    Route::post('/users', [UserController::class, 'store']);
-    Route::get('/users', [UserController::class, 'index']);
     Route::delete('/users/{id}', [UserController::class, 'destroy']);
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::get('/users/{id}', [UserController::class, 'show']);
     //books
-    Route::post('/books', [BooksController::class, 'store']);
     Route::delete('/books/{id}', [BooksController::class, 'destroy']);
     Route::put('/books/{id}', [BooksController::class, 'update']);
     Route::get('/books/{id}', [BooksController::class, 'show']);
@@ -53,7 +58,6 @@ Route::middleware('jwt.verify')->group(function () {
     //loans
     Route::post('/request/{bookid}', [BookLoansController::class, 'store']);
     Route::get('/requests', [BookLoansController::class, 'index_by_user']);
-    Route::get('/loans', [BookLoansController::class, 'index']);
     Route::delete('/loans/{id}', [BookLoansController::class, 'destroy']);
     Route::put('/loans/{id}', [BookLoansController::class, 'update']);
     Route::get('/loans/{id}', [BookLoansController::class, 'show']);

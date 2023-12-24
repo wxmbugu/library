@@ -1,10 +1,10 @@
 <template>
   <ErrorToast :error="error" @close-error="closeError" />
   <SuccessToast :success="success" @close-success="closeSuccess" />
-  <BookLoan :loans="loans" />
+  <BookLoan :loans="loans" @cancel-loan="updateBookLoanStatus" />
 </template>
 <script>
-import { getAllBookLoanRequestbyUser } from '../client'
+import { getAllBookLoanRequestbyUser, updateBookLoan } from '../client'
 import ErrorToast from '@/components/ErrorToast.vue'
 import SuccessToast from '@/components/SuccessToast.vue'
 import BookLoan from '@/components/LoanTable.vue'
@@ -29,10 +29,21 @@ export default {
     getallbookrequest() {
       getAllBookLoanRequestbyUser()
         .then((response) => {
-          this.loans = response.message
+          const loansArray = Object.values(response.message)
+          this.loans = loansArray
         })
         .catch((err) => {
           console.log(err)
+        })
+    },
+    updateBookLoanStatus({ id }) {
+      updateBookLoan(id, 'canceled')
+        .then((response) => {
+          this.success = response.message
+          this.getallbookrequest()
+        })
+        .catch((err) => {
+          this.error = err.response.data.error
         })
     },
     closeError() {

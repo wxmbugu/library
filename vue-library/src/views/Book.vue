@@ -6,9 +6,9 @@
     <div class="mx-20 pt-20">
       <div class="grid grid-cols-3 gap-4 place-content-stretch">
         <div class="">
-          <div class="aspect-w-16 aspect-h-9">
+          <div class="aspect-w-16 aspect-h-9 flex items-center justify-center">
             <img
-              class="object-contain shadow-md hover:shadow-xl rounded-lg h-60 h-full"
+              class="object-cover shadow-md hover:shadow-xl rounded-lg"
               v-bind:src="book.image"
               alt=""
             />

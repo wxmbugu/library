@@ -69,7 +69,7 @@ export default {
 
         if (response && response.user && response.user.id !== undefined) {
           if (response.user.id === 1) {
-            this.$router.push({ name: 'Requests' })
+            this.$router.push({ name: 'Dashboard' })
           } else {
             this.$router.push({ name: 'Home' })
           }

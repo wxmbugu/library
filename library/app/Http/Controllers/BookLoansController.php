@@ -75,6 +75,7 @@ class BookLoansController extends Controller
         $loan = BookLoans::find($id);
         $loan->extended = is_null($request->extended) ? $loan->extended : $request->extended;
         $loan->extension_date = is_null($request->extension_date) ? $loan->extension_date : $request->extension_date;
+        $loan->status = is_null($request->status) ? $loan->status : $request->status;
         $loan->updated_at = Carbon::now();
         $loan->save();
         return response()->json([

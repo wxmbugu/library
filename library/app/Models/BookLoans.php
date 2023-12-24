@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int     $extension_date
  * @property int     $penalty_amount
  * @property int     $added_by
- * @property boolean $extended
+ * @property string $extended
  * @property string  $penalty_status
  * @property string  $status
  */
@@ -57,7 +57,7 @@ class BookLoans extends Model
      * @var array
      */
     protected $casts = [
-        'created_at' => 'timestamp', 'updated_at' => 'timestamp', 'loan_date' => 'timestamp', 'due_date' => 'timestamp', 'return_date' => 'timestamp', 'extended' => 'boolean', 'extension_date' => 'timestamp', 'penalty_amount' => 'int', 'penalty_status' => 'string', 'status' => 'string', 'added_by' => 'int'
+        'created_at' => 'timestamp', 'updated_at' => 'timestamp', 'loan_date' => 'timestamp', 'due_date' => 'timestamp', 'return_date' => 'timestamp', 'extended' => 'string', 'extension_date' => 'timestamp', 'penalty_amount' => 'int', 'penalty_status' => 'string', 'status' => 'string', 'added_by' => 'int'
     ];
 
     /**

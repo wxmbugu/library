@@ -4,7 +4,7 @@
       No Requested books at the moment.
     </div>
 
-    <div v-else class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div v-else class="overflow-x-auto shadow-md sm:rounded-lg">
       <table
         class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
       >
@@ -51,7 +51,7 @@
               <a
                 href="#"
                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                @click.prevent="cancelLoan()"
+                @click.prevent="cancelLoan(loan)"
               >
                 Cancel
               </a>
@@ -72,8 +72,8 @@ export default {
     },
   },
   methods: {
-    cancelLoan() {
-      this.$emit('cancel-loan')
+    cancelLoan(loan) {
+      this.$emit('cancel-loan', { id: loan.id })
     },
   },
 }
