@@ -1,7 +1,7 @@
 <template>
   <ErrorToast :error="error" @close-error="closeError" />
   <SuccessToast :success="success" @close-success="closeSuccess" />
-  <BookLoan :loans="loans" @cancel-loan="requestedBookLoans" />
+  <BookLoan :loans="requestedBookLoans" @cancel-loan="updateBookLoanStatus" />
 </template>
 <script>
 import { getAllBookLoanRequestbyUser, updateBookLoan } from '../client'
