@@ -79,12 +79,10 @@ class BookLoansController extends Controller
                 "error" => "You can't cancel a book that is already borrowed."
             ], 400);
         }
-        if ($request->status === 'borrowed') {
-            if (!is_null($loan->user_id) && $loan->status !== 'returned') {
-                return response()->json([
-                    "error" => "This book is already being used by another user."
-                ], 400);
-            }
+        if ($request->status === 'borrowed' && $loan->status !== 'returned') {
+            return response()->json([
+                "error" => "This book is already being used by another user."
+            ], 400);
         }
         // Update the loan details
         $loan->extended = is_null($request->extended) ? $loan->extended : $request->extended;
