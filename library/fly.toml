@@ -33,3 +33,8 @@ console_command = "php /var/www/html/artisan tinker"
   cpu_kind = "shared"
   cpus = 1
   memory_mb = 1024
+
+[mounts]
+  source = "library_volume"
+  destination="/var/www/html/storage"
+

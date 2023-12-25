@@ -62,6 +62,23 @@ class BooksController extends Controller
     public function update(Request $request, $id)
     {
         $book = Books::find($id);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+
+            $validator = Validator::make($request->all(), [
+                'file' => 'required|max:20480|mimes:jpeg,jpg,png,webp',
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    "error" => $validator->errors()
+                ], 400);
+            }
+
+            $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('uploads', $file, $fileName);
+            $book->image = config('app.url') . '/api/media/' . $fileName;
+            $book->save();
+        }
         $book->name = is_null($request->name) ? $book->name : $request->name;
         $book->description = is_null($request->description) ? $book->description : $request->description;
         $book->publisher = is_null($request->publisher) ? $book->publisher : $request->publisher;
@@ -69,7 +86,6 @@ class BooksController extends Controller
         $book->pages = is_null($request->pages) ? $book->pages : $request->pages;
         $book->category = is_null($request->category) ? $book->category : $request->category;
         $book->sub_category = is_null($request->sub_category) ? $book->sub_category : $request->sub_category;
-        $book->image = is_null($request->image) ? $book->image : $request->image;
         $book->updated_at = Carbon::now();
         $book->save();
         return response()->json([
