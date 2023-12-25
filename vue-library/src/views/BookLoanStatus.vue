@@ -1,7 +1,7 @@
 <template>
   <ErrorToast :error="error" @close-error="closeError" />
   <SuccessToast :success="success" @close-success="closeSuccess" />
-  <BookLoan :loans="loans" @cancel-loan="updateBookLoanStatus" />
+  <BookLoan :loans="loans" @cancel-loan="requestedBookLoans" />
 </template>
 <script>
 import { getAllBookLoanRequestbyUser, updateBookLoan } from '../client'
@@ -21,6 +21,11 @@ export default {
       error: null,
       success: null,
     }
+  },
+  computed: {
+    requestedBookLoans() {
+      return this.loans.filter((loan) => loan.status === 'requested')
+    },
   },
   mounted() {
     this.getallbookrequest()

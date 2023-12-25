@@ -74,15 +74,21 @@ class BookLoansController extends Controller
     {
         $loan = BookLoans::find($id);
         // check if the book is borrowed so a user or admin can't cancel the book if it's already borrowed
-        if (($loan->status === 'borrowed' || $loan->status === 'rejected' || $request->status === 'canceled') && !$request->extended && !$request->status === 'requested') {
+        if ($loan->status === 'borrowed' && $request->status === 'canceled') {
             return response()->json([
-                "error" => "You can't cancel a book that is already borrowed."
+                "error" => "You can't cancel a book that you've borrowed and not returned"
             ], 400);
         }
-        if ($request->status === 'borrowed' && $loan->status !== 'returned') {
-            return response()->json([
-                "error" => "This book is already being used by another user."
-            ], 400);
+        if ($request->status === 'borrowed') {
+            $existingActiveLoans = BookLoans::where('book_id', $loan->book_id)
+                ->where('status', 'borrowed')
+                ->where('id', '!=', $id)
+                ->count();
+            if ($existingActiveLoans > 0) {
+                return response()->json([
+                    "error" => "This book is already being used by another user."
+                ], 400);
+            }
         }
         // Update the loan details
         $loan->extended = is_null($request->extended) ? $loan->extended : $request->extended;
