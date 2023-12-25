@@ -64,7 +64,6 @@ class BooksController extends Controller
         $book = Books::find($id);
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-
             $validator = Validator::make($request->all(), [
                 'file' => 'required|max:20480|mimes:jpeg,jpg,png,webp',
             ]);
@@ -73,7 +72,6 @@ class BooksController extends Controller
                     "error" => $validator->errors()
                 ], 400);
             }
-
             $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
             Storage::disk('public')->putFileAs('uploads', $file, $fileName);
             $book->image = config('app.url') . '/api/media/' . $fileName;

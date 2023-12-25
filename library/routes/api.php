@@ -52,7 +52,7 @@ Route::middleware('jwt.verify')->group(function () {
     Route::get('/users/{id}', [UserController::class, 'show']);
     //books
     Route::delete('/books/{id}', [BooksController::class, 'destroy']);
-    Route::put('/books/{id}', [BooksController::class, 'update']);
+    Route::post('/book/{id}', [BooksController::class, 'update']);
     Route::get('/books/{id}', [BooksController::class, 'show']);
 
     //loans
